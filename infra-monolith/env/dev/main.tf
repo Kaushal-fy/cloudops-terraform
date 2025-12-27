@@ -10,27 +10,27 @@ module "vpc" {
 module "ec2" {
   source         = "../../modules/ec2"
   name           = "dev"
-  vpc_id         = module.vpc.main.id
-  subnet_ids     = module.vpc.public.*.id
+  vpc_id         = module.vpc.vpc_id
+  subnet_ids     = module.vpc.public_subnet_ids
   instance_count = 2
   instance_type  = "t3.micro"
   ami            = "ami-0c02fb55956c7d316" # Amazon Linux 2
 }
 
 module "rds" {
-  source            = "../../modules/rds"
-  name              = "dev"
-  private_subnet_ids = module.vpc.private.*.id
-  username          = "admin"
-  password          = "Admin123!" # for sandbox only
-  instance_class    = "db.t3.micro"
-  allocated_storage = 20
+  source             = "../../modules/rds"
+  name               = "dev"
+  private_subnet_ids = module.vpc.private_subnet_ids
+  username           = "admin"
+  password           = "Admin123!" # sandbox only
+  instance_class     = "db.t3.micro"
+  allocated_storage  = 20
 }
 
 module "alb" {
   source          = "../../modules/alb"
   name            = "dev"
-  vpc_id          = module.vpc.main.id
-  subnet_ids      = module.vpc.public.*.id
+  vpc_id          = module.vpc.vpc_id
+  subnet_ids      = module.vpc.public_subnet_ids
   security_groups = [module.ec2.web_sg_id]
 }
