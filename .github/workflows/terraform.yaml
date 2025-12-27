@@ -38,11 +38,11 @@ jobs:
       - name: Terraform Plan
         run: terraform -chdir=env/dev plan -out=tfplan
 
-      - name: Upload Terraform Plan
-        uses: actions/upload-artifact@v3
-        with:
-            name: tfplan
-            path: env/dev/tfplan
+    #   - name: Upload Terraform Plan
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #         name: tfplan
+    #         path: env/dev/tfplan
 
       - name: Terraform Apply
         run: terraform -chdir=env/dev apply -auto-approve tfplan
