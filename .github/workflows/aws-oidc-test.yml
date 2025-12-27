@@ -1,0 +1,32 @@
+name: AWS OIDC Test
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to test
+
+permissions:
+  id-token: write       # Needed for OIDC
+  contents: read
+
+jobs:
+  test-aws-auth:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repo (optional, but standard)
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Configure AWS credentials via OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::070593202443:role/git_role
+          aws-region: us-east-1
+
+      # Step 3: Test the identity
+      - name: Test AWS Identity
+        run: |
+          echo "Checking AWS identity..."
+          aws sts get-caller-identity
