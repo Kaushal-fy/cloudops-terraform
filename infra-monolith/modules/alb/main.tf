@@ -24,9 +24,9 @@ resource "aws_lb_listener" "web" {
 }
 
 resource "aws_lb_target_group_attachment" "ec2" {
-  for_each = toset(var.instance_ids)
+  count = length(var.instance_ids)
 
   target_group_arn = aws_lb_target_group.web.arn
-  target_id        = each.value
+  target_id        = var.instance_ids[count.index]
   port             = 80
 }
