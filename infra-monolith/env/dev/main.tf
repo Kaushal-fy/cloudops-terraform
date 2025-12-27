@@ -21,7 +21,7 @@ module "rds" {
   source             = "../../modules/rds"
   name               = "dev"
   private_subnet_ids = module.vpc.private_subnet_ids
-  username           = "admin"
+  username           = "admin1"
   password           = "Admin123!" # sandbox only
   instance_class     = "db.t3.micro"
   allocated_storage  = 20
@@ -33,4 +33,5 @@ module "alb" {
   vpc_id          = module.vpc.vpc_id
   subnet_ids      = module.vpc.public_subnet_ids
   security_groups = [module.ec2.web_sg_id]
+  instance_ids    = module.ec2.instance_ids
 }

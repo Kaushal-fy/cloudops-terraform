@@ -22,3 +22,11 @@ resource "aws_lb_listener" "web" {
     target_group_arn = aws_lb_target_group.web.arn
   }
 }
+
+resource "aws_lb_target_group_attachment" "ec2" {
+  for_each = toset(var.instance_ids)
+
+  target_group_arn = aws_lb_target_group.this.arn
+  target_id        = each.value
+  port             = 80
+}
