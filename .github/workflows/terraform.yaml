@@ -30,15 +30,15 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd env/dev
+          cd infra-monolith/env/dev
           terraform init
 
       - name: Terraform Plan
         run: |
-          cd env/dev
+          cd infra-monolith/env/dev
           terraform plan -out=tfplan
 
       - name: Terraform Apply
         run: |
-          cd env/dev
+          cd infra-monolith/env/dev
           terraform apply -auto-approve tfplan
