@@ -17,3 +17,8 @@ variable "security_groups" {
   type        = list(string)
   description = "Security groups for ALB"
 }
+
+variable "instance_ids" {
+  type        = list(string)
+  description = "EC2 instance IDs to attach to ALB target group"
+}
