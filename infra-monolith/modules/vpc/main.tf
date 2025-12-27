@@ -38,6 +38,6 @@ resource "aws_nat_gateway" "nat" {
 
 resource "aws_eip" "nat" {
   count      = length(var.public_subnets)
-  vpc        = true
+  domain = "vpc"
   depends_on = [aws_internet_gateway.gw]
 }
